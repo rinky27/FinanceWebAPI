@@ -17,7 +17,7 @@ namespace FinanceManagementSystem.Controllers
         FinanceEntities db = new FinanceEntities();
         [Route("api/AdminAPI/GetAllCustomers")]
         [HttpGet]
-    
+
         public IEnumerable<Customer> Get()
         {
             try
@@ -58,7 +58,7 @@ namespace FinanceManagementSystem.Controllers
             string result = "";
             try
             {
-                var data = db.AdminCredentials.Where(x => x.AdminUsername == name && x.AdminPassword ==pwd);
+                var data = db.AdminCredentials.Where(x => x.AdminUsername == name && x.AdminPassword == pwd);
                 if (data.Count() == 0)
                     result = "Inavalid credentials";
                 else
@@ -71,6 +71,76 @@ namespace FinanceManagementSystem.Controllers
             }
             return result;
         }
-    
+        [Route("api/AdminAPI/UpdateCustomer/{id}")]
+        [HttpPut]
+        public string Put(int id, [FromBody] Customer newcust)
+        {
+            string result = "";
+            try
+            {
+                var olddata = db.Customers.Where(x => x.RegNumber == id).SingleOrDefault();
+                if (olddata == null)
+                    throw new Exception("Invalid Id");
+                else
+                {
+                   // olddata.RegNumber = newcust.RegNumber;
+                    olddata.CustName = newcust.CustName;
+                    olddata.PhoneNo = newcust.PhoneNo;
+                    olddata.CustEmail = newcust.CustEmail;
+                    olddata.CustUsername = newcust.CustUsername;
+                    olddata.CustPassword = newcust.CustPassword;
+                    olddata.CustAddress = newcust.CustAddress;
+                    olddata.CardType = newcust.CardType;
+                    olddata.BankName = newcust.BankName;
+                    olddata.AccountNumber = newcust.AccountNumber;
+                    olddata.IFSCCode = newcust.IFSCCode;
+                    //  olddata.ApprovalStatus = newcust.ApprovalStatus; 
+
+                    var res = db.SaveChanges();
+                    if (res > 0)
+                        result = "Update Successful";
+                    else
+                        result = "Not updated";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+        [Route("api/AdminAPI/DeleteCustomer/{id}")]
+         [HttpDelete]
+          public bool Delete(int id)
+          {
+              try
+              {
+
+                  var del1 = db.Customers.Where(x => x.RegNumber == id).SingleOrDefault();
+                  var del2 = db.OrderDetails.Where(x => x.RegNumber == id).SingleOrDefault();
+                  var del3 = db.EMICards.Where(x => x.RegNumber == id).SingleOrDefault();
+             if (del1 == null)
+                    throw new Exception("Id cannot be null");
+
+                else
+                {
+                    db.Customers.Remove(del1);
+                    db.OrderDetails.Remove(del2);
+                    db.EMICards.Remove(del3);
+                    var res = db.SaveChanges();
+                    if (res > 0)
+                        return true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return false;
+        }
     }
-    }
+
+}
+   

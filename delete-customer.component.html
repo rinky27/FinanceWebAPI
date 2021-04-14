@@ -1,0 +1,13 @@
+<p>delete-customer works!</p>
+  
+<h1>Delete Customer</h1>
+<form action="" #DeleteForm = "ngForm" (ngSubmit) = "Delete(DeleteForm)">
+    <div>
+        <label for="cid">Registration ID</label>
+        <input type="number" name="cid" [(ngModel)]="model.cid" #cid = "ngModel" id="cid" required>
+        <span *ngIf="cid.errors?.required">Registration ID cannot be blank</span>
+    </div>
+    <div>
+        <button type="submit" [disabled] = "DeleteForm.invalid">Delete</button>
+    </div>
+</form>

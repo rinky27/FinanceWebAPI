@@ -1,0 +1,64 @@
+<h1>Update customer</h1>
+<form action="" #updatecustomer="ngForm" (ngSubmit)="Update(updatecustomer)">
+    
+    <div>
+        <label for="cname">customer Name</label>
+        <input type="text" name="cname" id="cname" [(ngModel)]="model.cname" #cname = "ngModel" required>
+        <span *ngIf="cname.errors?.required">Field cannot be blank</span>
+    </div>
+    <div>
+        <label for="phone">phone</label>
+        <input type="number" name="phone" id="phone" [(ngModel)]="model.phone" #phone="ngModel" required>
+        <span *ngIf="phone.errors?.required">Field cannot be blank</span>
+    </div>
+    <div>
+        <label for="custemail">custemail</label>
+        <input type="email" name="custemail" id="custemail" [(ngModel)]="model.custemail" #custemail="ngModel" required>
+        <span *ngIf="custemail.errors?.required">Field cannot be blank</span>
+    </div>
+    <div>
+        <label for="custusername">Username</label>
+        <input type="text" name="custusername" id="custusername" [(ngModel)]="model.custusername" #custusername="ngModel" required>
+        <span *ngIf="custusername.errors?.required">Field cannot be blank</span>
+    </div>
+   
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" [(ngModel)]="model.password" #password="ngModel" required>
+        <span *ngIf="password.errors?.required">Field cannot be blank</span>
+    </div>
+    <div>
+        <label for="custaddress">Address</label>
+        <input type="text" name="custaddress" id="custaddress" [(ngModel)]="model.custaddress" #custaddress="ngModel" required>
+        <span *ngIf="custaddress.errors?.required">Field cannot be blank</span>
+    </div>
+    <div >
+           <input type="radio" name="Card" [(ngModel)]="model.Card" #Card="ngModel" required value="Gold">&nbsp;Gold<br>
+            <input type="radio" name="Card" [(ngModel)]="model.Card" #Card="ngModel" required value="Titanium">&nbsp;Titanium
+   </div>
+
+    <div>
+        <input type="text"  name="Bank" [(ngModel)]="model.Bank" #Bank="ngModel" placeholder="Enter Bank Name" required/>
+        <br>
+        <span  *ngIf="Bank.errors?.required">Bank Name is Required</span>
+    </div>
+
+<div >
+        <input type="text"  name="Accountno" [(ngModel)]="model.Accountno" #Accountno="ngModel" placeholder="Enter Account No" required/>
+        <br>
+        <span  *ngIf="Accountno.errors?.required">Account No. is Required</span>
+</div>
+
+<div>
+        <input type="text"  name="ifsc" [(ngModel)]="model.ifsc" #ifsc="ngModel" placeholder="Enter IFSC Code" required/>
+        <br>
+        <span  *ngIf="ifsc.errors?.required">IFSC Code is Required</span>
+    </div>
+
+    <div>
+        <button type="submit" [disabled]="updatecustomer.invalid">Update Details</button>
+    </div>
+</form>
+
+
+
